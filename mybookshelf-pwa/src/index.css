@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@300;700;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-paper text-ink pb-0; /* Background warna kertas, text warna tinta */
+  font-family: 'Lato', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Merriweather', serif; /* Judul pakai Serif */
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8B6A6;
+  border-radius: 4px;
+}

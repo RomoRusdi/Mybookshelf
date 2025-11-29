@@ -1,0 +1,15 @@
+# Node modules (Folder sampah yang berat, jangan diupload)
+node_modules/
+**/node_modules/
+
+# Build output (Folder hasil build, jangan diupload)
+dist/
+**/dist/
+
+# Environment Variables (Rahasia, jangan diupload!)
+.env
+**/.env
+
+# System Files
+.DS_Store
+Thumbs.db
