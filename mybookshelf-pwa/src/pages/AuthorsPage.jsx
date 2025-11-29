@@ -6,11 +6,9 @@ export default function AuthorsPage() {
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // State untuk Edit Modal
   const [editingAuthor, setEditingAuthor] = useState(null); // Data penulis yang sedang diedit
   const [showModal, setShowModal] = useState(false);
 
-  // Fungsi Load Data
   const fetchAuthors = async () => {
     try {
       const data = await authorService.getAllAuthors();
@@ -26,13 +24,11 @@ export default function AuthorsPage() {
     fetchAuthors();
   }, []);
 
-  // Buka Modal Edit
   const handleEditClick = (author) => {
     setEditingAuthor(author);
     setShowModal(true);
   };
 
-  // Simpan Perubahan
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -44,7 +40,7 @@ export default function AuthorsPage() {
       
       alert('Data penulis berhasil diperbarui!');
       setShowModal(false);
-      fetchAuthors(); // Refresh list agar data terupdate
+      fetchAuthors();
     } catch (error) {
       alert('Gagal update penulis: ' + error.message);
     }
@@ -63,7 +59,6 @@ export default function AuthorsPage() {
           {authors.map(author => (
             <div key={author.id} className="group relative bg-white p-6 rounded-2xl shadow-soft border border-stone-100 text-center hover:shadow-md transition-all">
               
-              {/* TOMBOL EDIT (Muncul saat hover di desktop, atau selalu ada di mobile) */}
               <button 
                 onClick={() => handleEditClick(author)}
                 className="absolute top-3 right-3 p-2 bg-stone-100 rounded-full text-gray-500 hover:bg-primary hover:text-white transition-colors opacity-100 md:opacity-0 group-hover:opacity-100"
@@ -72,7 +67,6 @@ export default function AuthorsPage() {
                 <Edit2 size={16} />
               </button>
 
-              {/* Foto Penulis */}
               <div className="w-24 h-24 rounded-full mx-auto mb-4 p-1 border-2 border-stone-100 overflow-hidden relative">
                 {author.photo_url ? (
                   <img 
@@ -94,7 +88,6 @@ export default function AuthorsPage() {
         </div>
       )}
 
-      {/* === MODAL EDIT PENULIS === */}
       {showModal && editingAuthor && (
         <div className="fixed inset-0 bg-ink/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
           <div className="bg-paper p-6 rounded-3xl w-full max-w-sm shadow-2xl border border-stone-100">

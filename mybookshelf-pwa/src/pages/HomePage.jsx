@@ -8,13 +8,10 @@ import { Link } from 'react-router-dom';
 export default function HomePage() {
   const { books, loading, error } = useBooks();
   
-  // State untuk Statistik
   const [totalAuthors, setTotalAuthors] = useState(0);
   const [totalFavorites, setTotalFavorites] = useState(0);
 
-  // Load Data Tambahan
   useEffect(() => {
-    // 1. Hitung Penulis
     const fetchAuthors = async () => {
       try {
         const data = await authorService.getAllAuthors();
@@ -25,7 +22,6 @@ export default function HomePage() {
     };
     fetchAuthors();
 
-    // 2. Hitung Favorit dari LocalStorage
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setTotalFavorites(favorites.length);
   }, []);
@@ -49,10 +45,7 @@ export default function HomePage() {
 
   return (
     <div className="space-y-10 relative min-h-screen pb-24">
-      
-      {/* === 1. BANNER MODERN === */}
       <div className="bg-gradient-to-r from-[#FAE8D6] to-[#FCEFE3] p-8 md:p-12 rounded-3xl relative overflow-hidden shadow-sm">
-        {/* Dekorasi Background */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/40 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
         
         <div className="relative z-10 max-w-2xl">
@@ -64,7 +57,6 @@ export default function HomePage() {
           </p>
           
           <div className="flex flex-wrap gap-4">
-            {/* PERBAIKAN DI SINI: Menggunakan Link ke /search */}
             <Link 
               to="/search" 
               className="px-6 py-3 bg-primary text-white font-bold rounded-xl shadow-lg hover:bg-[#8B4513] transition-all inline-block"
@@ -79,28 +71,23 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* === 2. STATISTIK CARDS === */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Card Total Buku */}
         <div className="bg-white p-6 rounded-2xl shadow-soft border border-stone-50 flex flex-col items-center justify-center text-center hover:scale-[1.02] transition-transform">
           <span className="text-4xl font-bold text-accent mb-1">{books.length}</span>
           <span className="text-sm text-gray-400 font-medium">Total Buku</span>
         </div>
 
-        {/* Card Favorit */}
         <div className="bg-white p-6 rounded-2xl shadow-soft border border-stone-50 flex flex-col items-center justify-center text-center hover:scale-[1.02] transition-transform">
           <span className="text-4xl font-bold text-red-500 mb-1">{totalFavorites}</span>
           <span className="text-sm text-gray-400 font-medium">Favorit</span>
         </div>
 
-        {/* Card Penulis */}
         <div className="bg-white p-6 rounded-2xl shadow-soft border border-stone-50 flex flex-col items-center justify-center text-center hover:scale-[1.02] transition-transform">
           <span className="text-4xl font-bold text-teal-600 mb-1">{totalAuthors}</span>
           <span className="text-sm text-gray-400 font-medium">Penulis</span>
         </div>
       </div>
 
-      {/* === 3. BUKU TERBARU (GRID) === */}
       <div>
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-serif font-bold text-xl text-ink flex items-center gap-2">
@@ -125,7 +112,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* TOMBOL FAB */}
       <Link 
         to="/add-book" 
         className="fixed bottom-24 right-6 md:bottom-10 md:right-10 bg-primary text-white p-4 rounded-2xl shadow-xl hover:bg-[#8B4513] hover:scale-110 transition-all z-50 flex items-center justify-center"

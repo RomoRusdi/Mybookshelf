@@ -14,7 +14,6 @@ import EditBookPage from './pages/EditBookPage';
 function App() {
   return (
     <Router>
-      {/* Bungkus semua konten dengan Layout agar responsif (Desktop/Mobile) */}
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />

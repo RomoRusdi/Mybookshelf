@@ -4,14 +4,13 @@ import useBooks from '../hooks/useBooks';
 import BookCard from '../components/books/BookCard';
 
 export default function SearchPage() {
-  const { books, loading } = useBooks(); // Ambil semua buku dulu
+  const { books, loading } = useBooks(); 
   const [query, setQuery] = useState('');
   const [filteredBooks, setFilteredBooks] = useState([]);
 
-  // Logic Filter
   useEffect(() => {
     if (query.trim() === '') {
-      setFilteredBooks(books); // Jika kosong, tampilkan semua
+      setFilteredBooks(books); 
     } else {
       const results = books.filter(book => 
         book.title.toLowerCase().includes(query.toLowerCase())
@@ -24,7 +23,6 @@ export default function SearchPage() {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4 text-gray-800">Cari Buku</h1>
       
-      {/* Input Pencarian */}
       <div className="relative mb-6">
         <SearchIcon className="absolute left-3 top-3 text-gray-400" size={20} />
         <input 
@@ -36,7 +34,6 @@ export default function SearchPage() {
         />
       </div>
 
-      {/* Hasil Pencarian */}
       {loading ? (
         <p className="text-center text-gray-400">Memuat data...</p>
       ) : (

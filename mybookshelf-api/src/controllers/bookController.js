@@ -21,7 +21,6 @@ const BookController = {
 
   async create(req, res) {
     try {
-      // Ambil data dari body request
       const newBook = req.body;
       const data = await BookModel.create(newBook);
       res.status(201).json(data);

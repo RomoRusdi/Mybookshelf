@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { User, Save, Edit2 } from 'lucide-react';
-import useBooks from '../hooks/useBooks'; // 1. IMPORT INI (Tadi kurang ini)
+import useBooks from '../hooks/useBooks';
 
 export default function ProfilePage() {
-  // 2. AMBIL DATA BUKU DARI HOOK
   const { books } = useBooks(); 
 
   const [profile, setProfile] = useState({
@@ -11,8 +10,7 @@ export default function ProfilePage() {
     bio: 'Saya suka membaca buku.',
   });
   const [isEditing, setIsEditing] = useState(false);
-  
-  // Data dummy (opsional, jika books belum load)
+
   const stats = {
     joined: '2024'
   };
@@ -20,12 +18,10 @@ export default function ProfilePage() {
   const [favCount, setFavCount] = useState(0);
 
   useEffect(() => {
-    // Load Profil
     const savedProfile = localStorage.getItem('userProfile');
     if (savedProfile) {
       setProfile(JSON.parse(savedProfile));
     }
-    // Load Jumlah Favorit Real
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setFavCount(favorites.length);
   }, []);
@@ -37,14 +33,9 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      
-      {/* === HEADER CARD === */}
       <div className="bg-white rounded-3xl p-8 shadow-soft border border-stone-50 flex flex-col items-center text-center relative overflow-hidden">
-        {/* Dekorasi lingkaran background */}
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#FAE8D6] to-white z-0"></div>
-
         <div className="relative z-10 mt-4">
-          {/* Avatar */}
           <div className="w-28 h-28 bg-[#FCD34D] rounded-full flex items-center justify-center mx-auto mb-4 text-white shadow-lg border-4 border-white">
             <User size={56} className="text-[#8B4513]" />
           </div>
@@ -86,13 +77,11 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* === AKTIVITAS SECTION === */}
       <div className="bg-paper p-2">
         <h3 className="font-bold text-lg text-ink mb-4 ml-2">Aktivitas</h3>
         <div className="bg-white rounded-2xl p-6 shadow-soft border border-stone-50 space-y-4">
           <div className="flex justify-between items-center border-b border-stone-100 pb-4">
             <span className="text-gray-600">Buku Ditambahkan</span>
-            {/* SEKARANG VARIABEL 'books' SUDAH ADA */}
             <span className="font-bold text-primary">{books ? books.length : 0}</span> 
           </div>
           <div className="flex justify-between items-center border-b border-stone-100 pb-4">
@@ -106,7 +95,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* === GENRE FAVORIT SECTION === */}
       <div className="bg-paper p-2 pb-24">
         <h3 className="font-bold text-lg text-ink mb-4 ml-2">Genre Favorit</h3>
         <div className="bg-red-50/50 rounded-2xl p-6 border border-red-50 flex flex-wrap gap-3">

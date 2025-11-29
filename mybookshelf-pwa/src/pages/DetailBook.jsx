@@ -12,7 +12,6 @@ export default function DetailBook() {
   const [ratingInput, setRatingInput] = useState(0);
   const [isRatingMode, setIsRatingMode] = useState(false);
 
-  // Fetch Data
   const fetchDetail = async () => {
     try {
       const data = await bookService.getBookById(id);
@@ -54,9 +53,7 @@ export default function DetailBook() {
     }
   };
 
-  // --- FUNGSI HAPUS BUKU ---
   const handleDelete = async () => {
-    // Konfirmasi dulu agar tidak terhapus tidak sengaja
     if (window.confirm("Apakah Anda yakin ingin menghapus buku ini secara permanen?")) {
       try {
         await bookService.deleteBook(id);
@@ -74,25 +71,20 @@ export default function DetailBook() {
   return (
     <div className="bg-paper min-h-screen pb-20 font-sans">
       
-      {/* Header Gambar */}
       <div className="relative w-full h-[50vh] md:h-[60vh] bg-stone-200 overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center blur-2xl scale-110 opacity-60" style={{ backgroundImage: `url(${book.cover_url})` }}></div>
         <div className="absolute inset-0 bg-black/20"></div>
         <img src={book.cover_url} alt={book.title} className="relative z-10 w-full h-full object-contain py-6 mx-auto shadow-lg" />
         
-        {/* Tombol Back */}
         <button onClick={() => navigate(-1)} className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition-all">
           <ArrowLeft size={24} className="text-ink" />
         </button>
 
-        {/* --- TOMBOL EDIT & DELETE (Pojok Kanan Atas) --- */}
         <div className="absolute top-4 right-4 z-20 flex gap-2">
-          {/* Tombol Edit */}
           <Link to={`/edit-book/${id}`} className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white text-blue-600 transition-all">
             <Edit size={24} />
           </Link>
           
-          {/* Tombol Delete */}
           <button onClick={handleDelete} className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-red-50 text-red-600 transition-all">
             <Trash2 size={24} />
           </button>
@@ -108,7 +100,6 @@ export default function DetailBook() {
             <span className="font-medium">{book.authors?.name}</span>
           </div>
           
-          {/* Rating Interaktif */}
           <div className="flex items-center gap-2">
             {!isRatingMode ? (
               <button 

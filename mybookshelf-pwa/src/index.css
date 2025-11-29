@@ -4,11 +4,11 @@
 @tailwind utilities;
 
 body {
-  @apply bg-paper text-ink pb-0; /* Background warna kertas, text warna tinta */
+  @apply bg-paper text-ink pb-0; 
   font-family: 'Lato', sans-serif;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Merriweather', serif; /* Judul pakai Serif */
+  font-family: 'Merriweather', serif; 
 }
 ::-webkit-scrollbar {
   width: 8px;

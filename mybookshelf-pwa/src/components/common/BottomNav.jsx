@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 export default function BottomNav() {
   const location = useLocation();
   
-  // Fungsi untuk mengecek menu aktif
   const isActive = (path) => location.pathname === path 
     ? "text-primary scale-110" 
     : "text-gray-400 hover:text-gray-600";

@@ -2,7 +2,6 @@ const supabase = require('../config/supabaseClient');
 
 const BookModel = {
   async getAll() {
-    // Mengambil buku beserta nama penulisnya (Join tabel)
     const { data, error } = await supabase
       .from('books')
       .select('*, authors(name)');
@@ -13,7 +12,7 @@ const BookModel = {
   async getById(id) {
     const { data, error } = await supabase
       .from('books')
-      .select('*, authors(*)') // Ambil detail buku + detail lengkap penulis
+      .select('*, authors(*)')
       .eq('id', id)
       .single();
     if (error) throw error;

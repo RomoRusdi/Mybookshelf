@@ -8,7 +8,6 @@ const AuthorModel = {
   },
 
   async getById(id) {
-    // Ambil data penulis beserta semua buku yang ditulisnya
     const { data, error } = await supabase
       .from('authors')
       .select('*, books(*)')

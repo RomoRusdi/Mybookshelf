@@ -5,7 +5,7 @@ import authorService from '../services/authorService';
 import bookService from '../services/bookService';
 
 export default function EditBookPage() {
-  const { id } = useParams(); // Ambil ID buku dari URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,6 @@ export default function EditBookPage() {
     author_id: ''
   });
 
-  // 1. Load Data Penulis & Data Buku yang mau diedit
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,7 +25,6 @@ export default function EditBookPage() {
         setAuthors(authorsData);
 
         const bookData = await bookService.getBookById(id);
-        // Isi form dengan data yang ada
         setFormData({
           title: bookData.title,
           description: bookData.description || '',
@@ -53,7 +51,7 @@ export default function EditBookPage() {
     try {
       await bookService.updateBook(id, formData);
       alert('Buku berhasil diperbarui!');
-      navigate(`/book/${id}`); // Balik ke halaman detail
+      navigate(`/book/${id}`); 
     } catch (error) {
       alert('Gagal update: ' + error.message);
     }

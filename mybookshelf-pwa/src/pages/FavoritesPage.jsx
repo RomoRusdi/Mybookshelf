@@ -9,7 +9,6 @@ export default function FavoritesPage() {
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      // 1. Ambil ID dari Local Storage
       const favIds = JSON.parse(localStorage.getItem('favorites') || '[]');
 
       if (favIds.length === 0) {
@@ -19,24 +18,20 @@ export default function FavoritesPage() {
       }
 
       try {
-        // 2. Fetch detail buku satu per satu (Dengan penanganan Error 404)
         const bookPromises = favIds.map(async (id) => {
           try {
             return await bookService.getBookById(id);
           } catch (error) {
-            // Jika error 404 (buku sudah dihapus di database), kembalikan null
             return null;
           }
         });
 
         const results = await Promise.all(bookPromises);
         
-        // 3. Filter hanya buku yang datanya ada (tidak null)
         const validBooks = results.filter(book => book !== null);
         
         setFavorites(validBooks);
 
-        // 4. Update LocalStorage (Hapus ID "hantu" yang bukunya sudah tidak ada)
         const validIds = validBooks.map(b => b.id);
         if (validIds.length !== favIds.length) {
           localStorage.setItem('favorites', JSON.stringify(validIds));
@@ -52,7 +47,6 @@ export default function FavoritesPage() {
     fetchFavorites();
   }, []);
 
-  // Fungsi Reset (Opsional, untuk bersih-bersih jika error parah)
   const handleClearFavorites = () => {
     if (confirm("Hapus semua daftar favorit?")) {
       localStorage.removeItem('favorites');

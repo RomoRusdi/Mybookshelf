@@ -18,11 +18,10 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex bg-paper text-ink font-sans">
       
-      {/* === DESKTOP SIDEBAR === */}
       <aside className="hidden md:flex flex-col w-64 bg-surface border-r border-stone-100 fixed h-full z-20 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
         <div className="p-8">
           <h1 className="text-2xl font-black text-ink tracking-tight flex items-center gap-3 font-serif">
-            {/* Logo Desktop Konsisten */}
+
             <div className="bg-primary text-white p-2 rounded-lg shadow-sm">
               <BookOpen size={24} />
             </div>
@@ -58,25 +57,20 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
-      {/* === MAIN CONTENT === */}
       <main className="flex-1 md:ml-64 w-full relative">
         
-        {/* === HEADER MOBILE (PERUBAHAN DI SINI) === */}
         <header className="md:hidden bg-surface/90 backdrop-blur-md p-4 sticky top-0 z-30 border-b border-stone-100 flex items-center gap-3 shadow-sm">
-          {/* Logo Buku dengan Background Coklat */}
           <div className="bg-primary text-white p-2 rounded-lg shadow-sm">
             <BookOpen size={20} />
           </div>
           <h1 className="text-xl font-bold text-ink font-serif tracking-tight">MyBookshelf</h1>
         </header>
 
-        {/* Isi Halaman */}
         <div className="p-4 md:p-8 max-w-7xl mx-auto pb-24 md:pb-8">
           {children}
         </div>
       </main>
 
-      {/* === MOBILE BOTTOM NAV === */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <div className="flex justify-around items-center h-16">
           {menus.map((menu) => (
