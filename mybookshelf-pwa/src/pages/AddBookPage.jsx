@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Save, ArrowLeft, Plus, X } from 'lucide-react';
+import toast from 'react-hot-toast';
 import authorService from '../services/authorService';
 import bookService from '../services/bookService';
 
@@ -40,10 +41,10 @@ export default function AddBookPage() {
     e.preventDefault();
     try {
       await bookService.createBook({ ...formData, rating: 0 });
-      alert('Buku berhasil ditambahkan!');
+      toast.success('Buku berhasil ditambahkan!', { duration: 3000 });
       navigate('/'); // Kembali ke Home
     } catch (error) {
-      alert('Gagal menambahkan buku: ' + error.message);
+      toast.error('Gagal menambahkan buku: ' + error.message);
     }
   };
 
@@ -51,13 +52,13 @@ export default function AddBookPage() {
     e.preventDefault();
     try {
       await authorService.createAuthor(newAuthor);
-      alert('Penulis berhasil ditambahkan!');
+      toast.success('Penulis berhasil ditambahkan!');
       
       setShowAuthorModal(false);
       setNewAuthor({ name: '', bio: '', photo_url: '' });
       loadAuthors(); // Reload dropdown agar nama baru muncul
     } catch (error) {
-      alert('Gagal menambah penulis');
+      toast.error('Gagal menambah penulis');
     }
   };
 

@@ -74,8 +74,8 @@ export default function FavoritesPage() {
         </div>
       ) : favorites.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {favorites.map(book => (
-            <BookCard key={book.id} book={book} />
+          {favorites.map((book, index) => ( // Ambil index
+            <BookCard key={book.id} book={book} index={index} /> // Kirim index
           ))}
         </div>
       ) : (

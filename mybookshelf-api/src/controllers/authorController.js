@@ -19,13 +19,20 @@ const AuthorController = {
     }
   },
 
-  async create(req, res) {
+async create(req, res) {
     try {
-      const newAuthor = req.body;
-      const data = await AuthorModel.create(newAuthor);
+      const { name, bio, photo_url } = req.body;
+      const existingAuthor = await AuthorModel.getByName(name);
+      
+      if (existingAuthor) {
+        return res.status(400).json({ error: `Penulis "${name}" sudah terdaftar!` });
+      }
+
+      const data = await AuthorModel.create({ name, bio, photo_url });
       res.status(201).json(data);
+
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(500).json({ error: err.message });
     }
   },
 
@@ -38,7 +45,21 @@ const AuthorController = {
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
-  } 
+  },
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      await AuthorModel.delete(id);
+      res.json({ message: "Penulis berhasil dihapus" });
+    } catch (err) {
+      // Cek jika error karena ada relasi buku (Foreign Key Violation)
+      if (err.code === '23503') {
+        return res.status(400).json({ error: "Gagal: Penulis ini masih memiliki buku. Hapus bukunya terlebih dahulu." });
+      }
+      res.status(500).json({ error: err.message });
+    }
+  }
 };
 
 module.exports = AuthorController;

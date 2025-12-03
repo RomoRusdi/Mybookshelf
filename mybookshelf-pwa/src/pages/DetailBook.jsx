@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, User, Star, Calendar, Save, Trash2, Edit } from 'lucide-react'; // Import Icon Baru
+import { ArrowLeft, User, Star, Calendar, Save, Trash2, Edit } from 'lucide-react';
+import toast from 'react-hot-toast'; // Impor Toast
 import bookService from '../services/bookService';
 
 export default function DetailBook() {
@@ -12,6 +13,7 @@ export default function DetailBook() {
   const [ratingInput, setRatingInput] = useState(0);
   const [isRatingMode, setIsRatingMode] = useState(false);
 
+  // Fetch Data
   const fetchDetail = async () => {
     try {
       const data = await bookService.getBookById(id);
@@ -19,6 +21,7 @@ export default function DetailBook() {
       setRatingInput(data.rating || 0);
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Gagal memuat detail buku"); // Toast Error
     } finally {
       setLoading(false);
     }
@@ -33,11 +36,15 @@ export default function DetailBook() {
 
   const toggleFavorite = () => {
     let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    
     if (isFavorite) {
       favorites = favorites.filter(favId => favId !== id);
+      toast.success("Dihapus dari favorit"); // Notifikasi Hapus
     } else {
       favorites.push(id);
+      toast.success("Ditambahkan ke favorit"); // Notifikasi Tambah
     }
+    
     localStorage.setItem('favorites', JSON.stringify(favorites));
     setIsFavorite(!isFavorite);
   };
@@ -47,20 +54,22 @@ export default function DetailBook() {
       await bookService.updateBookRating(id, ratingInput);
       setIsRatingMode(false);
       fetchDetail();
-      alert('Rating berhasil disimpan!');
+      toast.success('Rating berhasil disimpan!'); // Toast Success
     } catch (error) {
-      alert('Gagal update rating');
+      toast.error('Gagal update rating'); // Toast Error
     }
   };
 
+  // --- FUNGSI HAPUS BUKU ---
   const handleDelete = async () => {
+    // Confirm bawaan browser masih oke untuk tindakan berbahaya
     if (window.confirm("Apakah Anda yakin ingin menghapus buku ini secara permanen?")) {
       try {
         await bookService.deleteBook(id);
-        alert("Buku berhasil dihapus.");
-        navigate('/', { replace: true }); // Balik ke Home
+        toast.success("Buku berhasil dihapus"); // Toast Success
+        navigate('/', { replace: true });
       } catch (error) {
-        alert("Gagal menghapus: " + error.message);
+        toast.error("Gagal menghapus: " + error.message); // Toast Error
       }
     }
   };
@@ -71,15 +80,18 @@ export default function DetailBook() {
   return (
     <div className="bg-paper min-h-screen pb-20 font-sans">
       
+      {/* Header Gambar */}
       <div className="relative w-full h-[50vh] md:h-[60vh] bg-stone-200 overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center blur-2xl scale-110 opacity-60" style={{ backgroundImage: `url(${book.cover_url})` }}></div>
         <div className="absolute inset-0 bg-black/20"></div>
         <img src={book.cover_url} alt={book.title} className="relative z-10 w-full h-full object-contain py-6 mx-auto shadow-lg" />
         
+        {/* Tombol Back */}
         <button onClick={() => navigate(-1)} className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white transition-all">
           <ArrowLeft size={24} className="text-ink" />
         </button>
 
+        {/* --- TOMBOL EDIT & DELETE --- */}
         <div className="absolute top-4 right-4 z-20 flex gap-2">
           <Link to={`/edit-book/${id}`} className="bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-md hover:bg-white text-blue-600 transition-all">
             <Edit size={24} />
@@ -100,6 +112,7 @@ export default function DetailBook() {
             <span className="font-medium">{book.authors?.name}</span>
           </div>
           
+          {/* Rating Interaktif */}
           <div className="flex items-center gap-2">
             {!isRatingMode ? (
               <button 
@@ -138,8 +151,8 @@ export default function DetailBook() {
           onClick={toggleFavorite}
           className={`w-full md:w-auto md:px-8 py-4 font-bold rounded-xl shadow-md transition-all flex justify-center items-center gap-2 hover:scale-[1.02] active:scale-[0.98] ${
             isFavorite 
-              ? 'bg-red-50 text-red-600 border-2 border-red-200 hover:bg-red-100' // Merah jika sudah favorit
-              : 'bg-primary text-white hover:bg-[#8B4513] hover:shadow-lg' // Coklat solid (Primary) jika belum
+              ? 'bg-red-50 text-red-600 border-2 border-red-200 hover:bg-red-100' 
+              : 'bg-primary text-white hover:bg-[#8B4513] hover:shadow-lg'
           }`}
         >
           <Star size={20} fill={isFavorite ? "currentColor" : "none"} />

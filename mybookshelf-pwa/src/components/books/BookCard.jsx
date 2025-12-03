@@ -1,13 +1,18 @@
 import { Star, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function BookCard({ book }) {
+// Terima prop 'index' untuk mengatur delay animasi
+export default function BookCard({ book, index = 0 }) {
   return (
     <Link 
       to={`/book/${book.id}`} 
-      className="group block bg-card rounded-2xl shadow-soft border border-stone-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+      // Tambahkan class 'animate-card'
+      // Tambahkan style animationDelay berdasarkan index (dikalikan 100ms)
+      className="animate-card group block bg-card rounded-2xl shadow-soft border border-stone-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+      style={{ animationDelay: `${index * 100}ms` }}
     >
       <div className="flex p-4 gap-5">
+        {/* Cover Buku */}
         <div className="w-24 h-36 flex-shrink-0 relative rounded-lg overflow-hidden shadow-md">
           <img 
             src={book.cover_url || 'https://placehold.co/100x150?text=No+Cover'} 
@@ -16,6 +21,7 @@ export default function BookCard({ book }) {
           />
         </div>
 
+        {/* Info Buku */}
         <div className="flex-1 flex flex-col justify-between py-1">
           <div>
             <h3 className="font-serif font-bold text-lg text-ink line-clamp-2 leading-tight mb-2 group-hover:text-secondary transition-colors">

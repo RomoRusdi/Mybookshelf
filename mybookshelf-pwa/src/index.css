@@ -20,3 +20,35 @@ h1, h2, h3, h4, h5, h6 {
   background: #C8B6A6;
   border-radius: 4px;
 }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* BARU: Untuk Pindah Halaman (Lebih cepat/snappy) */
+.page-transition {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+@keyframes fadeInUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.animate-card {
+  /* Mulai dengan opacity 0 agar tidak berkedip */
+  opacity: 0; 
+  animation: fadeInUp 0.5s ease-out forwards;
+}

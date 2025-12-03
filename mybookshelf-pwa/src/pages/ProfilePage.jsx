@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { User, Save, Edit2 } from 'lucide-react';
 import useBooks from '../hooks/useBooks';
+import toast from 'react-hot-toast'; // 1. Import Toast
 
 export default function ProfilePage() {
   const { books } = useBooks(); 
@@ -29,10 +30,13 @@ export default function ProfilePage() {
   const handleSave = () => {
     localStorage.setItem('userProfile', JSON.stringify(profile));
     setIsEditing(false);
+    toast.success('Profil berhasil disimpan!'); // 2. Tampilkan Toast Sukses
   };
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      
+      {/* HEADER CARD */}
       <div className="bg-white rounded-3xl p-8 shadow-soft border border-stone-50 flex flex-col items-center text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#FAE8D6] to-white z-0"></div>
         <div className="relative z-10 mt-4">
@@ -77,6 +81,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
+      {/* AKTIVITAS SECTION */}
       <div className="bg-paper p-2">
         <h3 className="font-bold text-lg text-ink mb-4 ml-2">Aktivitas</h3>
         <div className="bg-white rounded-2xl p-6 shadow-soft border border-stone-50 space-y-4">
@@ -95,6 +100,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
+      {/* GENRE FAVORIT SECTION */}
       <div className="bg-paper p-2 pb-24">
         <h3 className="font-bold text-lg text-ink mb-4 ml-2">Genre Favorit</h3>
         <div className="bg-red-50/50 rounded-2xl p-6 border border-red-50 flex flex-wrap gap-3">

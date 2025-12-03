@@ -105,8 +105,8 @@ export default function HomePage() {
               <p>Belum ada buku tersedia.</p>
             </div>
           ) : (
-            books.map((book) => (
-              <BookCard key={book.id} book={book} />
+            books.map((book, index) => ( // Ambil index di sini
+              <BookCard key={book.id} book={book} index={index} />
             ))
           )}
         </div>

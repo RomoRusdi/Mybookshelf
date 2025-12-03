@@ -39,8 +39,8 @@ export default function SearchPage() {
       ) : (
         <div className="space-y-3">
           {filteredBooks.length > 0 ? (
-            filteredBooks.map(book => (
-              <BookCard key={book.id} book={book} />
+            filteredBooks.map((book, index) => ( // Ambil index
+              <BookCard key={book.id} book={book} index={index} />
             ))
           ) : (
             <div className="text-center py-10 text-gray-400">

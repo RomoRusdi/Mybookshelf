@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Save, ArrowLeft } from 'lucide-react';
+import toast from 'react-hot-toast'; // Import Toast
 import authorService from '../services/authorService';
 import bookService from '../services/bookService';
 
@@ -33,7 +34,7 @@ export default function EditBookPage() {
           author_id: bookData.author_id
         });
       } catch (err) {
-        alert("Gagal memuat data buku");
+        toast.error('Gagal memuat data Buku'); // Pakai Toast Error
         navigate('/');
       } finally {
         setLoading(false);
@@ -50,10 +51,10 @@ export default function EditBookPage() {
     e.preventDefault();
     try {
       await bookService.updateBook(id, formData);
-      alert('Buku berhasil diperbarui!');
+      toast.success('Buku berhasil diperbarui!'); // GANTI ALERT JADI TOAST SUCCESS
       navigate(`/book/${id}`); 
     } catch (error) {
-      alert('Gagal update: ' + error.message);
+      toast.error('Gagal update: ' + error.message); // GANTI ALERT JADI TOAST ERROR
     }
   };
 

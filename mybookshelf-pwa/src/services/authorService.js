@@ -26,6 +26,16 @@ const authorService = {
     } catch (error) {
       throw error;
     }
+  },
+
+  deleteAuthor: async (id) => {
+    try {
+      const response = await api.delete(`/authors/${id}`);
+      return response.data;
+    } catch (error) {
+      // Lempar pesan error spesifik dari backend (misal: masih ada buku)
+      throw error.response?.data?.error || error.message;
+    }
   }
 };
 
